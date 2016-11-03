@@ -29,6 +29,9 @@ init = tf.initialize_all_variables()
 # Launch the graph
 with tf.Session() as sess:
     sess.run(init)
+    
+    #Training cycle
+    
 
 
 
