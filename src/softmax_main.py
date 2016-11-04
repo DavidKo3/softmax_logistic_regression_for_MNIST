@@ -31,8 +31,18 @@ with tf.Session() as sess:
     sess.run(init)
     
     #Training cycle
-    
-
+    for epoch in range(training_epochs):
+        avg_cost = 0
+        total_batch = int(mnist.train.num_examples/batch_size)
+        
+        # Fit the line
+        for step in xrange(total_batch):
+            batch_xs , batch_ys = mnist.train.next_batch(batch_size)
+        
+            # Fix training using batch data
+            sess.run(optimizer , feed_dict ={X:batch_xs, Y:batch_ys})
+             #compute average loss
+            avg_cost += sess.run(cost , feed_dict={X:batch_xs, Y:batch_ys})/total_batch
 
 
 
