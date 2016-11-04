@@ -34,18 +34,35 @@ with tf.Session() as sess:
     for epoch in range(training_epochs):
         avg_cost = 0
         total_batch = int(mnist.train.num_examples/batch_size)
-        
+        print total_batch
         # Fit the line
         for step in xrange(total_batch):
             batch_xs , batch_ys = mnist.train.next_batch(batch_size)
         
             # Fix training using batch data
             sess.run(optimizer , feed_dict ={X:batch_xs, Y:batch_ys})
-             #compute average loss
+            #compute average loss
             avg_cost += sess.run(cost , feed_dict={X:batch_xs, Y:batch_ys})/total_batch
+        # Display logs per epoch step
+        if epoch % display_step == 0 :
+            print "Epoch:" , '%04d' %(epoch+1) , "cost=" , "{:.9f}".format(avg_cost)
+            
+    print "Optimization Finished!"        
 
-
-
-
+    # Test model
+    correct_prediction = tf.equal(tf.argmax(activation, 1) , tf.argmax(Y, 1) )
+    # Cacluate accuracy
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+    
+    print ("Accuracy : ", accuracy.eval({X: mnist.test.images, Y: mnist.test.labels}))
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
